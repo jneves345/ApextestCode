@@ -28,8 +28,8 @@ jobs:
     - name: List contents of PMD extracted directory
       run: ls -alh /opt/pmd-pmd_releases-7.12.0
 
-    - name: List contents of PMD 'bin' directory
-      run: ls -alh /opt/pmd-pmd_releases-7.12.0/bin
+    - name: List contents of PMD opt directory
+      run: ls -alh /opt/pmd-pmd_releases-7.12.0/
 
     - name: Add PMD to PATH
       run: echo "/opt/pmd-pmd_releases-7.12.0/bin" >> $GITHUB_PATH
