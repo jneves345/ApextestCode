@@ -42,9 +42,4 @@ jobs:
         ls -alh pmd-report.html  # This will list the file to verify if it was created
       env:
         JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.442-6/x64
-
-    - name: Upload PMD report as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: pmd-report
-        path: pmd-report.html
+        
