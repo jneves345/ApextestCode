@@ -1,0 +1,35 @@
+name: PMD Analysis via Docker
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  pmd-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image for PMD
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: false
+          tags: pmd-apex:latest
+
+      - name: Run PMD Analysis in Container
+        run: |
+          # Run the container, mount the repository's 'src' folder into the container's /src.
+          docker run --rm -v "${{ github.workspace }}/src:/src" pmd-apex:latest
+
+      - name: Upload PMD Report Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: pmd-report
+          path: src/pmd-report.html
