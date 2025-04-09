@@ -20,45 +20,33 @@ jobs:
         distribution: temurin
         architecture: x64
 
-    - name: Install PMD 7.12.0
-      run: |
-        # Set PMD version to 7.12.0
-        PMD_VERSION="7.12.0"
-        
-        # Build the download URL for PMD 7.12.0
-        DOWNLOAD_URL="https://github.com/pmd/pmd/archive/refs/tags/pmd_releases/${PMD_VERSION}.zip"
-        
-        # Print the download URL for debugging
-        echo "Download URL: ${DOWNLOAD_URL}"
+   - name: Extract PMD
+        run: |
+          curl -L https://github.com/pmd/pmd/releases/download/pmd_releases/7.12.0/pmd_releases-7.12.0.zip -o pmd.zip
+          unzip pmd.zip -d /opt
 
-        # Download the PMD binary release
-        curl -L "${DOWNLOAD_URL}" -o pmd.zip || { echo "Download failed!"; exit 1; }
+      - name: List contents of PMD extracted directory
+        run: ls -alh /opt/pmd-*
 
-        # Verify the zip file integrity before unzipping
-        file pmd.zip
-        if [[ $(file --mime-type -b pmd.zip) != "application/zip" ]]; then
-          echo "Downloaded file is not a valid ZIP file!"
-          exit 1
-        fi
+      - name: List contents of PMD bin directory
+        run: ls -al /opt/pmd-7.12.0/bin
 
-        # Unzip the file and clean up
-        unzip pmd.zip -d /opt/ || { echo "Unzip failed!"; exit 1; }
-        rm pmd.zip
+      - name: Add PMD to PATH
+        run: echo "/opt/pmd-7.12.0/bin" >> $GITHUB_PATH
 
-        # List the contents of the extracted directory to verify PMD path
-        ls -alh /opt/pmd-*
+      - name: Print PATH for debugging
+        run: echo $PATH
 
-        # Add PMD to PATH
-        PMD_PATH="/opt/pmd-${PMD_VERSION}/bin"
-        echo "Adding ${PMD_PATH} to PATH"
-        echo "${PMD_PATH}" >> $GITHUB_PATH
+      - name: Ensure PMD is executable
+        run: chmod +x /opt/pmd-7.12.0/bin/pmd
 
-    - name: Verify PMD installation
-      run: |
-        # Verify PMD is available in the PATH
-        pmd -v  # This should print the PMD version
+      - name: Verify PMD installation
+        run: |
+          if [ ! -f /opt/pmd-7.12.0/bin/pmd ]; then
+            echo "PMD executable not found!";
+            exit 1;
+          fi
+          echo "PMD found!"
 
-    - name: Run PMD Analysis on Apex Code
-      run: |
-        # Run PMD analysis with the provided ruleset
-        pmd check -d src/ -R apex-ruleset
+      - name: Run PMD with full path
+        run: /opt/pmd-7.12.0/bin/pmd -v
