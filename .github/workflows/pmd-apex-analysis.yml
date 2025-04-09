@@ -20,23 +20,26 @@ jobs:
         distribution: temurin
         architecture: x64
 
-    - name: Install PMD
+    - name: Install Latest PMD
       run: |
-        # Download PMD binary release
-        curl -L https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.40.0/pmd-bin-6.40.0.zip -o pmd.zip
+        # Fetch the latest stable version from GitHub
+        LATEST_VERSION=$(curl -s https://api.github.com/repos/pmd/pmd/releases/latest | jq -r .tag_name)
+        
+        # Download the latest PMD binary release
+        curl -L "https://github.com/pmd/pmd/releases/download/${LATEST_VERSION}/pmd-bin-${LATEST_VERSION}.zip" -o pmd.zip
         unzip pmd.zip -d /opt/
         rm pmd.zip
 
         # List the contents of the extracted directory to verify the PMD path
-        ls -alh /opt/pmd-bin-6.40.0/bin/
+        ls -alh /opt/pmd-bin-*
 
         # Add PMD to PATH
-        echo "/opt/pmd-bin-6.40.0/bin" >> $GITHUB_PATH
+        echo "/opt/pmd-bin-${LATEST_VERSION}/bin" >> $GITHUB_PATH
 
     - name: Verify PMD installation
       run: |
         # Verify PMD is available in the PATH
-        pmd -v  # This should print PMD version
+        pmd -v  # This should print the PMD version
 
     - name: Run PMD Analysis on Apex Code
       run: |
