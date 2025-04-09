@@ -1,0 +1,40 @@
+name: PMD Apex Code Analysis
+
+on:
+  push:
+    branches:
+      - main  # Or adjust to the branch you want to monitor
+  pull_request:
+    branches:
+      - main  # Or adjust to the branch you want to monitor
+
+jobs:
+  pmd:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 8 (Required for PMD)
+      uses: actions/setup-java@v2
+      with:
+        java-version: '8'
+
+    - name: Install PMD
+      run: |
+        wget https://github.com/pmd/pmd/releases/download/pmd_releases/6.40.0/pmd-bin-6.40.0.zip
+        unzip pmd-bin-6.40.0.zip
+        sudo mv pmd-bin-6.40.0 /opt/pmd
+        sudo ln -s /opt/pmd/bin/pmd /usr/local/bin/pmd
+
+    - name: Run PMD Analysis on Apex Code
+      run: |
+        # Assuming your Apex code is in the 'src' folder
+        pmd -d src/ -R apex-ruleset.xml -f html -r pmd-report.html
+
+    - name: Upload PMD Report as an Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: pmd-report
+        path: pmd-report.html
