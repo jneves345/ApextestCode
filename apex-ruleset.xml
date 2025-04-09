@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<ruleset name="Apex Security Ruleset" xmlns="http://pmd.sf.net/ruleset/2.0.0"
+    xsi:schemaLocation="http://pmd.sf.net/ruleset/2.0.0 http://pmd.sf.net/ruleset_2_0_0.xsd"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <!-- Rule for avoiding SOQL Injection -->
+    <rule ref="category/apex/security.xml/AvoidSOQLInjection"/>
+
+    <!-- Rule for avoiding DML Injection -->
+    <rule ref="category/apex/security.xml/AvoidDMLInjection"/>
+
+    <!-- Rule to ensure that all Apex code properly uses the Sharing Model -->
+    <rule ref="category/apex/security.xml/EnforceSharing"/>
+
+    <!-- Rule to prevent using dynamic SOQL without proper validation -->
+    <rule ref="category/apex/security.xml/AvoidDynamicSOQLWithoutBindVariable"/>
+
+    <!-- Rule for preventing the use of hardcoded credentials -->
+    <rule ref="category/apex/security.xml/AvoidHardCodedPasswords"/>
+
+    <!-- Rule for preventing the use of insecure cryptographic algorithms -->
+    <rule ref="category/apex/security.xml/UseSecureHashAlgorithm"/>
+
+    <!-- Rule to ensure proper use of with sharing or without sharing in classes -->
+    <rule ref="category/apex/security.xml/EnforceWithSharingOrWithoutSharing"/>
+
+    <!-- Rule for preventing insecure query result handling (e.g., no null checks) -->
+    <rule ref="category/apex/security.xml/AvoidNullPointerExceptions"/>
+
+    <!-- Rule for preventing the use of the `System.debug()` in production code -->
+    <rule ref="category/apex/security.xml/NoSystemDebugInProduction"/>
+
+    <!-- Rule to ensure proper validation of user inputs (to prevent XSS, SQL injection, etc.) -->
+    <rule ref="category/apex/security.xml/ValidateUserInput"/>
+    
+    <!-- Optional rule to detect insecure log statements -->
+    <rule ref="category/apex/security.xml/NoSensitiveInformationInLogs"/>
+
+</ruleset>
