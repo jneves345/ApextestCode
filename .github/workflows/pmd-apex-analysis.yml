@@ -9,47 +9,37 @@ on:
       - main  # Or adjust to the branch you want to monitor
 
 jobs:
-  pmd:
+  setup-pmd:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
+    - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up JDK 8 (Required for PMD)
+    - name: Set up Java JDK 8
       uses: actions/setup-java@v2
       with:
-        java-version: '8'
-        distribution: 'temurin'
+        java-version: 8
+        distribution: temurin
         architecture: x64
 
     - name: Install PMD
       run: |
-        # Download PMD binaries
-        wget https://github.com/pmd/pmd/releases/download/pmd_releases/6.40.0/pmd-bin-6.40.0.zip
-        unzip pmd-bin-6.40.0.zip
+        # Download PMD binary release
+        curl -L https://github.com/pmd/pmd/releases/download/pmd_releases%2F6.40.0/pmd-bin-6.40.0.zip -o pmd.zip
+        unzip pmd.zip -d /opt/
+        rm pmd.zip
 
-        # Move PMD to a specific location
-        sudo mv pmd-bin-6.40.0 /opt/pmd
+        # Add PMD to PATH
+        echo "/opt/pmd-bin-6.40.0/bin" >> $GITHUB_PATH
 
-        # Check if PMD is installed and what files are in the /opt/pmd/bin directory
-        ls -alh /opt/pmd/bin/  # This will list files in the bin directory
-
-        # Debugging: Ensure that PMD is present
-        ls -alh /opt/pmd/bin/pmd
-
-        
     - name: Run PMD Analysis on Apex Code
       run: |
         # Assuming your Apex code is in the 'src' folder
-        /opt/pmd/bin/pmd -d src/ -R apex-ruleset.xml -f html -r pmd-report.html
-        ls -alh pmd-report.html  # Verify if the file exists
-
-    - name: Upload PMD Report as an Artifact
-      uses: actions/upload-artifact@v4.6.2
-      with:
-        name: pmd-report
-        path: pmd-report.html
+        pmd check -d src/ -R apex-ruleset.xml -f html -r pmd-report.html
+        ls -alh pmd-report.html  # This will list the file to verify if it was created
+      env:
+        JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.442-6/x64
 
   download-artifact:
     runs-on: ubuntu-latest
