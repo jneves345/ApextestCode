@@ -27,9 +27,11 @@ jobs:
         unzip pmd.zip -d /opt/
         rm pmd.zip
 
-        # Add PMD to PATH and source it immediately in the current shell
+        # List the contents of the extracted directory to verify the PMD path
+        ls -alh /opt/pmd-bin-6.40.0/bin/
+
+        # Add PMD to PATH
         echo "/opt/pmd-bin-6.40.0/bin" >> $GITHUB_PATH
-        source /opt/pmd-bin-6.40.0/bin/pmd  # Ensure PMD command is accessible in this shell
 
     - name: Verify PMD installation
       run: |
