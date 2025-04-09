@@ -13,7 +13,7 @@ public without sharing class TestApexClass {
         String clientId='thisIsClientId'; //FIXME: EXPCREDCLIENTID Please use named credentials for authenticated callouts (rule: Security-ApexSuggestUsingNamedCred) more info here https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_named_credentials.htm || String clientId='thisIsClientId';
         String clientSecret='thisIsClientSecret'; //FIXME: EXPCREDCLIENTSECRET Please use named credentials for authenticated callouts (rule: Security-ApexSuggestUsingNamedCred) more info here https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/apex_callouts_named_credentials.htm || String clientSecret='thisIsClientSecret';
 
-        HttpRequest req=new HttpRequest();
+        HttpRequest req=new HttpRequest(); 
         HttpResponse res=new HttpResponse();
         Http http=new Http();
 
