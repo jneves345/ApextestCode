@@ -22,7 +22,7 @@ jobs:
         
     - name: Extract PMD
       run: |
-        curl -L https://github.com/pmd/pmd/releases/download/pmd_releases/7.12.0/pmd_releases-7.12.0.zip -o pmd.zip
+        curl -L https://github.com/pmd/pmd/archive/refs/tags/pmd_releases/7.12.0.zip -o pmd.zip
         unzip pmd.zip -d /opt
 
     - name: List contents of PMD extracted directory
