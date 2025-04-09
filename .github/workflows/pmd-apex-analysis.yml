@@ -25,27 +25,25 @@ jobs:
 
     - name: Install PMD
       run: |
+        # Download PMD binaries
         wget https://github.com/pmd/pmd/releases/download/pmd_releases/6.40.0/pmd-bin-6.40.0.zip
         unzip pmd-bin-6.40.0.zip
+
+        # Move PMD to a specific location
         sudo mv pmd-bin-6.40.0 /opt/pmd
-        sudo ln -s /opt/pmd/bin/pmd /usr/local/bin/pmd
 
-        # Remove any existing symbolic link for 'pmd' and create a new one
-        sudo rm -f /usr/local/bin/pmd
-        sudo ln -s /opt/pmd/bin/pmd /usr/local/bin/pmd
+        # Check if PMD is installed and what files are in the /opt/pmd/bin directory
+        ls -alh /opt/pmd/bin/  # This will list files in the bin directory
 
-        #Debug: Print the PATH environment variable
-        echo "PATH: $PATH"
+        # Debugging: Ensure that PMD is present
+        ls -alh /opt/pmd/bin/pmd
 
-        # Verify if PMD is installed correctly by printing the version
-        /opt/pmd/bin/pmd --version  # Using the absolute path to verify PMD installation
         
-
     - name: Run PMD Analysis on Apex Code
       run: |
         # Assuming your Apex code is in the 'src' folder
-        pmd -d src/ -R apex-ruleset.xml -f html -r pmd-report.html
-        ls -alh pmd-report.html  # This will list the file to verify if it was created
+        /opt/pmd/bin/pmd -d src/ -R apex-ruleset.xml -f html -r pmd-report.html
+        ls -alh pmd-report.html  # Verify if the file exists
 
     - name: Upload PMD Report as an Artifact
       uses: actions/upload-artifact@v4.6.2
