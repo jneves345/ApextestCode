@@ -30,6 +30,12 @@ jobs:
         sudo mv pmd-bin-6.40.0 /opt/pmd
         sudo ln -s /opt/pmd/bin/pmd /usr/local/bin/pmd
 
+        # Make the 'pmd' command available in the PATH
+        sudo ln -s /opt/pmd/bin/pmd /usr/local/bin/pmd
+
+        # Verify PMD installation
+        pmd --version
+
     - name: Run PMD Analysis on Apex Code
       run: |
         # Assuming your Apex code is in the 'src' folder
