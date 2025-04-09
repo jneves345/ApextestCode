@@ -35,7 +35,7 @@ jobs:
         ls -alh pmd-report.html  # This will list the file to verify if it was created
 
     - name: Upload PMD Report as an Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4.6.2
       with:
         name: pmd-report
         path: pmd-report.html
