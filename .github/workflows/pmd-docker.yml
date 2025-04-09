@@ -38,7 +38,7 @@ jobs:
           docker run --rm -v "${{ github.workspace }}/src:/src" -v "$GITHUB_WORKSPACE/pmd-reports:/reports" pmd-apex:latest
 
       - name: Upload PMD Report Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: pmd-report
           path: pmd-reports/pmd-report.html
