@@ -38,3 +38,13 @@ jobs:
       with:
         name: pmd-report
         path: pmd-report.html
+
+  download-artifact:
+    runs-on: ubuntu-latest
+    needs: pmd
+    steps:
+    - name: Download PMD Report Artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: pmd-report
+        path: ./pmd-report
