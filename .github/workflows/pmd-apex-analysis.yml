@@ -26,7 +26,7 @@ jobs:
         PMD_VERSION="7.12.0"
         
         # Build the download URL for PMD 7.12.0
-        DOWNLOAD_URL="https://github.com/pmd/pmd/releases/download/${PMD_VERSION}/pmd-bin-${PMD_VERSION}.zip"
+        DOWNLOAD_URL="https://github.com/pmd/pmd/archive/refs/tags/pmd_releases/${PMD_VERSION}.zip"
         
         # Print the download URL for debugging
         echo "Download URL: ${DOWNLOAD_URL}"
@@ -46,10 +46,10 @@ jobs:
         rm pmd.zip
 
         # List the contents of the extracted directory to verify PMD path
-        ls -alh /opt/pmd-bin-*
+        ls -alh /opt/pmd-*
 
         # Add PMD to PATH
-        echo "/opt/pmd-bin-${PMD_VERSION}/bin" >> $GITHUB_PATH
+        echo "/opt/pmd-${PMD_VERSION}/bin" >> $GITHUB_PATH
 
     - name: Verify PMD installation
       run: |
