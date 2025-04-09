@@ -27,8 +27,9 @@ jobs:
         unzip pmd.zip -d /opt/
         rm pmd.zip
 
-        # Add PMD to PATH
+        # Add PMD to PATH and source it immediately in the current shell
         echo "/opt/pmd-bin-6.40.0/bin" >> $GITHUB_PATH
+        source /opt/pmd-bin-6.40.0/bin/pmd  # Ensure PMD command is accessible in this shell
 
     - name: Verify PMD installation
       run: |
@@ -42,4 +43,3 @@ jobs:
         ls -alh pmd-report.html  # This will list the file to verify if it was created
       env:
         JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.442-6/x64
-        
