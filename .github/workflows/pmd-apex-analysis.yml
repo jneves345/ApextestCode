@@ -22,31 +22,31 @@ jobs:
         
     - name: Extract PMD
       run: |
-        curl -L https://github.com/pmd/pmd/archive/refs/tags/pmd_releases/7.12.0.zip -o pmd.zip
+        curl -L https://github.com/pmd/pmd/releases/download/pmd_releases/7.12.0/pmd_releases-7.12.0.zip -o pmd.zip
         unzip pmd.zip -d /opt
 
     - name: List contents of PMD extracted directory
-      run: ls -alh /opt/pmd-*
+      run: ls -alh /opt/pmd-pmd_releases-7.12.0
 
-    - name: List contents of OPT  directory
-      run: ls -al /opt/
+    - name: List contents of PMD 'bin' directory
+      run: ls -alh /opt/pmd-pmd_releases-7.12.0/bin
 
     - name: Add PMD to PATH
-      run: echo "/opt/pmd-7.12.0/bin" >> $GITHUB_PATH
+      run: echo "/opt/pmd-pmd_releases-7.12.0/bin" >> $GITHUB_PATH
 
     - name: Print PATH for debugging
       run: echo $PATH
 
     - name: Ensure PMD is executable
-      run: chmod +x /opt/pmd-7.12.0/bin/pmd
+      run: chmod +x /opt/pmd-pmd_releases-7.12.0/bin/pmd
 
     - name: Verify PMD installation
       run: |
-        if [ ! -f /opt/pmd-7.12.0/bin/pmd ]; then
+        if [ ! -f /opt/pmd-pmd_releases-7.12.0/bin/pmd ]; then
           echo "PMD executable not found!";
           exit 1;
         fi
         echo "PMD found!"
 
     - name: Run PMD with full path
-      run: /opt/pmd-7.12.0/bin/pmd -v
+      run: /opt/pmd-pmd_releases-7.12.0/bin/pmd -v
