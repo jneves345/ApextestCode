@@ -32,9 +32,10 @@ jobs:
       run: |
         # Assuming your Apex code is in the 'src' folder
         pmd -d src/ -R apex-ruleset.xml -f html -r pmd-report.html
+        ls -alh pmd-report.html  # This will list the file to verify if it was created
 
     - name: Upload PMD Report as an Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: pmd-report
         path: pmd-report.html
