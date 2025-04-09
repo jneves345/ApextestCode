@@ -34,8 +34,12 @@ jobs:
         sudo rm -f /usr/local/bin/pmd
         sudo ln -s /opt/pmd/bin/pmd /usr/local/bin/pmd
 
-        # Verify PMD installation
-        pmd --version
+        #Debug: Print the PATH environment variable
+        echo "PATH: $PATH"
+
+        # Verify if PMD is installed correctly by printing the version
+        /opt/pmd/bin/pmd --version  # Using the absolute path to verify PMD installation
+        
 
     - name: Run PMD Analysis on Apex Code
       run: |
