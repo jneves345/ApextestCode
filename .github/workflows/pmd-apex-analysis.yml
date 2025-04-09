@@ -49,7 +49,9 @@ jobs:
         ls -alh /opt/pmd-*
 
         # Add PMD to PATH
-        echo "/opt/pmd-${PMD_VERSION}/bin" >> $GITHUB_PATH
+        PMD_PATH="/opt/pmd-${PMD_VERSION}/bin"
+        echo "Adding ${PMD_PATH} to PATH"
+        echo "${PMD_PATH}" >> $GITHUB_PATH
 
     - name: Verify PMD installation
       run: |
@@ -59,7 +61,4 @@ jobs:
     - name: Run PMD Analysis on Apex Code
       run: |
         # Run PMD analysis with the provided ruleset
-        pmd check -d src/ -R apex-ruleset.xml -f html -r pmd-report.html
-        ls -alh pmd-report.html  # This will list the file to verify if it was created
-      env:
-        JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/8.0.442-6/x64
+        pmd check -d src/ -R apex-ruleset
