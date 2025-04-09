@@ -23,4 +23,6 @@ ENV PATH="/opt/pmd/bin:${PATH}"
 WORKDIR /src
 
 # Default command: run PMD check on the mounted source folder using an Apex ruleset.
-CMD ["pmd", "check", "-d", "/src", "-R", "rulesets/apex/quickstart.xml", "-f", "html", "-r", "pmd-report.html"]
+# Output the report to /reports/pmd-report.html
+CMD ["pmd", "check", "-d", "/src", "-R", "rulesets/apex/quickstart.xml", "-f", "html", "-r", "/reports/pmd-report.html"]
+
