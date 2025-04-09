@@ -30,7 +30,8 @@ jobs:
         sudo mv pmd-bin-6.40.0 /opt/pmd
         sudo ln -s /opt/pmd/bin/pmd /usr/local/bin/pmd
 
-        # Make the 'pmd' command available in the PATH
+        # Remove any existing symbolic link for 'pmd' and create a new one
+        sudo rm -f /usr/local/bin/pmd
         sudo ln -s /opt/pmd/bin/pmd /usr/local/bin/pmd
 
         # Verify PMD installation
