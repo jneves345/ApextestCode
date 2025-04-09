@@ -25,11 +25,15 @@ jobs:
 
       - name: Run PMD Analysis in Container
         run: |
-          # Run the container, mount the repository's 'src' folder into the container's /src.
-          docker run --rm -v "${{ github.workspace }}/src:/src" pmd-apex:latest
+          # Create a directory on the host to store the PMD report
+          mkdir -p $GITHUB_WORKSPACE/pmd-reports
+
+          # Run the container, mount the repository's 'src' folder into the container's /src,
+          # and output the PMD report to a location accessible on the host.
+          docker run --rm -v "${{ github.workspace }}/src:/src" -v "$GITHUB_WORKSPACE/pmd-reports:/reports" pmd-apex:latest
 
       - name: Upload PMD Report Artifact
         uses: actions/upload-artifact@v3
         with:
           name: pmd-report
-          path: src/pmd-report.html
+          path: pmd-reports/pmd-report.html
